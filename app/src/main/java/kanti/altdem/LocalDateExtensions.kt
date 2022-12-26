@@ -1,7 +1,6 @@
 package kanti.altdem
 
 import java.time.LocalDate
-import kotlin.math.roundToInt
 
 fun LocalDate.toEndDate(): LocalDate = plusMonths(21)
 
