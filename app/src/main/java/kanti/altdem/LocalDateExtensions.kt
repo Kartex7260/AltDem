@@ -1,6 +1,7 @@
 package kanti.altdem
 
 import java.time.LocalDate
+import java.time.chrono.IsoChronology
 
 fun LocalDate.toEndDate(): LocalDate = plusMonths(21)
 
@@ -17,16 +18,17 @@ val LocalDate.allDays: Int
 		val year = year - 2000
 		var days = 0
 		for (i in 1..year) {
-			days += if (i % 4 == 0)  366 else 365
+			val isLeapYear = IsoChronology.INSTANCE.isLeapYear(i.toLong())
+			days += if (isLeapYear) 366 else 365
 		}
-		days += dayOfMonth
+		days += dayOfYear
 		return days
 	}
 
 val LocalDate.allMonths: Float
 	get() {
 		val months = year * 12 + monthValue
-		return months + (dayOfYear / (if (isLeapYear) 366.0f else 365.0f))
+		return months + dayOfYear / lengthOfYear().toFloat()
 	}
 
 val LocalDate.allWeeks: Float
